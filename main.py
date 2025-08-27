@@ -6,6 +6,10 @@ import numpy as np
 import io
 import FreeSimpleGUI as sg
 from view_factor_cone_target import f as cone_view_factor_analytical
+
+# Set Arial as the default font for matplotlib
+plt.rcParams['font.family'] = 'Arial'
+
 sg.theme('Default1')
 def montecarlo_view_factor(d_r, distance, d_f, h_f, z_radiometer=0, shape="Cylinder", n_rays=10000, animate=False):
     hits = 0
@@ -135,10 +139,10 @@ def draw_3d_placeholder(d_r, distance, d_f, h_f, shape, z_radiometer=0, cone_x=0
     ax.set_xlim(-d_r, distance + d_f)
     ax.set_ylim(-Ly, Ly)
     ax.set_zlim(0, Lz)
-    ax.set_xlabel('X [m]')
-    ax.set_ylabel('Y [m]')
-    ax.set_zlabel('Z [m]')
-    ax.set_title('3D Schematic')
+    ax.set_xlabel('X [m]', fontname='Arial')
+    ax.set_ylabel('Y [m]', fontname='Arial')
+    ax.set_zlabel('Z [m]', fontname='Arial')
+    ax.set_title('3D Schematic', fontname='Arial')
     ax.grid(False)
     ax.view_init(elev=18, azim=115)
     plt.tight_layout()
@@ -195,39 +199,39 @@ def draw_topview_placeholder(d_r, distance, d_f, h_f, shape, cone_x=0):
             view_angle_deg = np.degrees(view_angle_rad)
             ax.text(label_x, label_y, f'{view_angle_deg:.1f}°', 
                    fontsize=10, ha='center', va='center', 
-                   bbox=dict(boxstyle="round,pad=0.3", facecolor='lightgreen', alpha=0.8))
+                   bbox=dict(boxstyle="round,pad=0.3", facecolor='lightgreen', alpha=0.8), fontname='Arial')
     ax.set_xlim(-d_r, distance + d_f)
     ax.set_ylim(-max(d_r, d_f), max(d_r, d_f))
     ax.set_aspect('equal')
-    ax.set_xlabel('X [m]')
-    ax.set_ylabel('Y [m]')
-    ax.set_title('Top View')
-    plt.legend()
+    ax.set_xlabel('X [m]', fontname='Arial')
+    ax.set_ylabel('Y [m]', fontname='Arial')
+    ax.set_title('Top View', fontname='Arial')
+    plt.legend(prop={'family': 'Arial'})
     plt.tight_layout()
     return fig
 
 label_width = 23
 input_width = 10
 col1 = [
-    [sg.Text("Flame Shape:", size=(label_width, 1), justification='r'),
-     sg.Combo(['Cylinder', 'Cone'], key='shape', default_value='Cylinder', size=(input_width, 1))],
-    [sg.Text("Radiometer diameter [m]:", size=(label_width, 1), justification='r'),
-     sg.Input('0.05', key='d_r', size=(input_width, 1))],
-    [sg.Text("Radiometer height [m]:", size=(label_width, 1), justification='r'),
-     sg.Input('0', key='z_radiometer', size=(input_width, 1))],
-    [sg.Text("Distance (radiometer–flame) [m]:", size=(label_width, 1), justification='r'),
-     sg.Input('0.20', key='distance', size=(input_width, 1))],
-    [sg.Text("Flame diameter [m]:", size=(label_width, 1), justification='r'),
-     sg.Input('0.10', key='d_f', size=(input_width, 1))],
-    [sg.Text("Flame height [m]:", size=(label_width, 1), justification='r'),
-     sg.Input('0.15', key='h_f', size=(input_width, 1))],
-    [sg.Text("Cone inclination x [m]:", size=(label_width, 1), justification='r'),
-     sg.Input('0', key='cone_x', size=(input_width, 1))],
-    [sg.Text("Calculation Method:", size=(label_width, 1), justification='r'),
-     sg.Combo(['Monte Carlo', 'Analytical (Cone only)'], key='method', default_value='Monte Carlo', size=(input_width, 1))],
-    [sg.Text("Rays (Monte Carlo):", size=(label_width, 1), justification='r'),
-     sg.Input('10000', key='n_rays', size=(input_width, 1))],
-    [sg.Push(), sg.Button('Calculate', key='calc'), sg.Push()],
+    [sg.Text("Flame Shape:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Combo(['Cylinder', 'Cone'], key='shape', default_value='Cylinder', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Radiometer diameter [m]:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('0.05', key='d_r', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Radiometer height [m]:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('0', key='z_radiometer', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Distance (radiometer–flame) [m]:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('0.20', key='distance', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Flame diameter [m]:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('0.10', key='d_f', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Flame height [m]:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('0.15', key='h_f', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Cone inclination x [m]:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('0', key='cone_x', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Calculation Method:", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Combo(['Monte Carlo', 'Analytical (Cone only)'], key='method', default_value='Monte Carlo', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Text("Rays (Monte Carlo):", size=(label_width, 1), justification='r', font=("Arial", 14)),
+     sg.Input('10000', key='n_rays', size=(input_width, 1), font=("Arial", 14))],
+    [sg.Push(), sg.Button('Calculate', key='calc', font=("Arial", 14)), sg.Push()],
 ]
 
 # Plots side-by-side in a row!
@@ -238,7 +242,7 @@ plots_row = [
 
 col2 = [
     plots_row,
-    [sg.Text('View factor:', size=(12,1)), sg.Text('', key='vf', font=("Arial", 16, "bold"))]
+    [sg.Text('View factor:', size=(12,1), font=("Arial", 14)), sg.Text('', key='vf', font=("Arial", 16, "bold"))]
 ]
 
 layout = [
@@ -263,7 +267,7 @@ while True:
             method = values['method']
             n_rays = int(float(values['n_rays']))
         except Exception as e:
-            sg.popup_error(f"Invalid input: {e}")
+            sg.popup_error(f"Invalid input: {e}", font=("Arial", 14))
             continue
         # Create figures
         fig3d = draw_3d_placeholder(d_r, distance, d_f, h_f, shape, z_radiometer, cone_x)
@@ -301,12 +305,12 @@ while True:
             window['vf'].update(f"{vf:.4f} ± {std:.4f}")
         elif method == 'Analytical (Cone only)':
             if shape != 'Cone':
-                sg.popup_error("Analytical calculation is only available for Cone shape.")
+                sg.popup_error("Analytical calculation is only available for Cone shape.", font=("Arial", 14))
                 continue
             
             # Validate parameters for analytical calculation
             if d_f/2 >= distance:
-                sg.popup_error("Analytical calculation requires cone radius to be less than distance.")
+                sg.popup_error("Analytical calculation requires cone radius to be less than distance.", font=("Arial", 14))
                 continue
                 
             try:
@@ -326,6 +330,6 @@ while True:
                 view_angle_deg = np.degrees(view_angle_rad)
                 window['vf'].update(f"{vf:.4f} (View angle: {view_angle_deg:.1f}°)")
             except Exception as e:
-                sg.popup_error(f"Analytical calculation failed: {e}")
+                sg.popup_error(f"Analytical calculation failed: {e}", font=("Arial", 14))
                 continue
 window.close()
